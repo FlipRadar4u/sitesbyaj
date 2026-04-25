@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="color-scheme" content="light"/>
+  <title>Free AI Visibility Report — Sites by AJ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #0d0d0d;
+      --white: #ffffff;
+      --cream: #f8f6f3;
+      --border: #e4e0da;
+      --grey: #666;
+      --light: #f0ede8;
+      --green: #16a34a;
+      --amber: #d97706;
+      --red: #dc2626;
+      color-scheme: light only;
+    }
+
+    body {
+      background: var(--black) !important;
+      color: var(--white) !important;
+      font-family: 'Geist', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* HEADER */
+    header {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6) !important;
+      text-decoration: none;
+    }
+
+    .back-link {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4) !important;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .back-link:hover { color: rgba(255,255,255,0.8) !important; }
+
+    /* HERO */
+    .hero {
+      padding: 3rem 1.5rem 2rem;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5) !important;
+      margin-bottom: 1.5rem;
+    }
+
+    .badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2.2rem, 8vw, 3.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #ffffff !important;
+      margin-bottom: 1rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: rgba(255,255,255,0.35) !important;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.45) !important;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    /* FORM */
+    .form-wrap {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .url-input {
+      background: rgba(255,255,255,0.06) !important;
+      border: 1.5px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      font-family: 'Geist', sans-serif;
+      font-size: 0.9rem;
+      color: #ffffff !important;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+
+    .url-input::placeholder { color: rgba(255,255,255,0.25) !important; }
+    .url-input:focus { border-color: rgba(255,255,255,0.35); }
+
+    .analyse-btn {
+      background: #ffffff;
+      color: #0d0d0d !important;
+      border: none;
+      border-radius: 100px;
+      padding: 1rem 1.5rem;
+      font-family: 'Geist', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: opacity 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .analyse-btn:hover { opacity: 0.88; }
+    .analyse-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .disclaimer {
+      text-align: center;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.2) !important;
+      margin-top: 0.75rem;
+    }
+
+    /* LOADING */
+    .loading {
+      display: none;
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem;
+      text-align: center;
+    }
+
+    .loading.active { display: block; }
+
+    .spinner {
+      width: 40px; height: 40px;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-top-color: rgba(255,255,255,0.6);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1.5rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-text {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.4) !important;
+      margin-bottom: 0.5rem;
+    }
+
+    .loading-sub {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.2) !important;
+    }
+
+    /* REPORT */
+    .report {
+      display: none;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
+
+    .report.active { display: block; }
+
+    .report-header {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .report-url {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4) !important;
+      margin-bottom: 0.5rem;
+      word-break: break-all;
+    }
+
+    .report-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.3rem;
+      color: #ffffff !important;
+    }
+
+    .score-circle {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 2px solid;
+    }
+
+    .score-circle.poor { border-color: var(--red); }
+    .score-circle.fair { border-color: var(--amber); }
+    .score-circle.good { border-color: var(--green); }
+
+    .score-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+
+    .score-circle.poor .score-num { color: var(--red) !important; }
+    .score-circle.fair .score-num { color: var(--amber) !important; }
+    .score-circle.good .score-num { color: var(--green) !important; }
+
+    .score-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3) !important;
+    }
+
+    /* REPORT SECTIONS */
+    .report-section {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .section-icon.fail { background: rgba(220,38,38,0.15); }
+    .section-icon.warn { background: rgba(217,119,6,0.15); }
+    .section-icon.pass { background: rgba(22,163,74,0.15); }
+
+    .section-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #ffffff !important;
+    }
+
+    .section-status {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-left: auto;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+    }
+
+    .section-status.fail { background: rgba(220,38,38,0.15); color: #f87171 !important; }
+    .section-status.warn { background: rgba(217,119,6,0.15); color: #fbbf24 !important; }
+    .section-status.pass { background: rgba(22,163,74,0.15); color: #4ade80 !important; }
+
+    .section-text {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.5) !important;
+      line-height: 1.7;
+    }
+
+    .fix-box {
+      margin-top: 1rem;
+      background: rgba(255,255,255,0.04);
+      border-left: 2px solid rgba(255,255,255,0.15);
+      border-radius: 0 8px 8px 0;
+      padding: 0.75rem 1rem;
+    }
+
+    .fix-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3) !important;
+      margin-bottom: 0.3rem;
+    }
+
+    .fix-text {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6) !important;
+      line-height: 1.6;
+    }
+
+    /* CTA */
+    .report-cta {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .cta-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.5rem;
+      color: #0d0d0d !important;
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-text {
+      font-size: 0.85rem;
+      color: #666 !important;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: #0d0d0d;
+      color: #ffffff !important;
+      text-decoration: none;
+      padding: 0.9rem 2rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .cta-btn:hover { opacity: 0.8; }
+
+    .restart-btn {
+      display: block;
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.3) !important;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .restart-btn:hover { color: rgba(255,255,255,0.6) !important; }
+
+    /* ERROR */
+    .error-msg {
+      display: none;
+      text-align: center;
+      padding: 1.5rem;
+      color: #f87171 !important;
+      font-size: 0.85rem;
+    }
+    .error-msg.active { display: block; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="https://sitesbyaj.com" class="brand">Sites by AJ</a>
+    <a href="https://sitesbyaj.com" class="back-link">← Back to site</a>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="badge">Free AI Visibility Report</div>
+    <h1>Is AI ignoring<br/>your <em>website?</em></h1>
+    <p class="subtitle">Paste your website URL below and our AI will analyse it instantly. You'll get a full breakdown of why ChatGPT, Perplexity and Google AI might not be recommending your business.</p>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-wrap" id="formSection">
+    <div class="input-group">
+      <input type="url" class="url-input" id="urlInput" placeholder="https://yourbusiness.co.uk" autocomplete="off"/>
+    </div>
+    <button class="analyse-btn" onclick="runAnalysis()">Analyse my site for free →</button>
+    <p class="disclaimer">Takes 15-30 seconds. No signup required.</p>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading" id="loadingSection">
+    <div class="spinner"></div>
+    <p class="loading-text" id="loadingText">Fetching your website...</p>
+    <p class="loading-sub">This usually takes 15-30 seconds</p>
+  </div>
+
+  <!-- ERROR -->
+  <p class="error-msg" id="errorMsg"></p>
+
+  <!-- REPORT -->
+  <div class="report" id="reportSection"></div>
+
+  <script>
+    const loadingMessages = [
+      "Fetching your website...",
+      "Checking for Schema markup...",
+      "Analysing SEO structure...",
+      "Testing AI crawler accessibility...",
+      "Reviewing content signals...",
+      "Generating your report..."
+    ];
+
+    let msgInterval;
+
+    function startLoadingMessages() {
+      let i = 0;
+      document.getElementById('loadingText').textContent = loadingMessages[0];
+      msgInterval = setInterval(() => {
+        i = (i + 1) % loadingMessages.length;
+        document.getElementById('loadingText').textContent = loadingMessages[i];
+      }, 4000);
+    }
+
+    function stopLoadingMessages() {
+      clearInterval(msgInterval);
+    }
+
+    async function runAnalysis() {
+      const url = document.getElementById('urlInput').value.trim();
+      if (!url) { alert('Please enter a website URL'); return; }
+      if (!url.startsWith('http')) { alert('Please include https:// at the start'); return; }
+
+      // Show loading
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('loadingSection').classList.add('active');
+      document.getElementById('errorMsg').classList.remove('active');
+      document.getElementById('reportSection').classList.remove('active');
+      startLoadingMessages();
+
+      try {
+        const response = await fetch('https://throbbing-sky-7880ai-report-worker.itzadamj23.workers.dev/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: url })
+        });
+
+        const data = await response.json();
+        
+        // Check for API errors
+        if (data.error) throw new Error('API Error: ' + data.error.message || JSON.stringify(data.error));
+        if (!data.content || !data.content[0]) throw new Error('Unexpected response: ' + JSON.stringify(data));
+        
+        const text = data.content[0].text;
+        const clean = text.replace(/```json|```/g, '').trim();
+        const report = JSON.parse(clean);
+
+        stopLoadingMessages();
+        document.getElementById('loadingSection').classList.remove('active');
+        renderReport(url, report);
+
+      } catch (err) {
+        stopLoadingMessages();
+        document.getElementById('loadingSection').classList.remove('active');
+        document.getElementById('formSection').style.display = 'block';
+        const errEl = document.getElementById('errorMsg');
+        errEl.textContent = 'Error: ' + err.message;
+        errEl.classList.add('active');
+      }
+    }
+
+    function renderReport(url, report) {
+      const scoreClass = report.score >= 70 ? 'good' : report.score >= 40 ? 'fair' : 'poor';
+
+      let checksHtml = report.checks.map(check => `
+        <div class="report-section">
+          <div class="section-header">
+            <div class="section-icon ${check.status}"><span>${check.icon}</span></div>
+            <span class="section-name">${check.name}</span>
+            <span class="section-status ${check.status}">${check.status === 'pass' ? 'Pass' : check.status === 'warn' ? 'Warning' : 'Fail'}</span>
+          </div>
+          <p class="section-text">${check.finding}</p>
+        </div>
+      `).join('');
+
+      const failCount = report.checks.filter(c => c.status === 'fail').length;
+      const ctaText = failCount >= 3
+        ? `Your site has ${failCount} critical issues stopping AI from recommending it. I can fix all of these as part of a new build or site upgrade.`
+        : `There are a few things holding your site back from AI search. I can sort these out quickly and get your business showing up everywhere.`;
+
+      document.getElementById('reportSection').innerHTML = `
+        <div class="report-header">
+          <div>
+            <p class="report-url">${url}</p>
+            <p class="report-title">AI Visibility Report</p>
+            <p style="font-size:0.78rem;color:rgba(255,255,255,0.3);margin-top:0.3rem;">${report.summary}</p>
+          </div>
+          <div class="score-circle ${scoreClass}">
+            <span class="score-num">${report.score}</span>
+            <span class="score-label">Score</span>
+          </div>
+        </div>
+
+        ${checksHtml}
+
+        <div class="report-cta">
+          <h3 class="cta-title">Want this fixed?</h3>
+          <p class="cta-text">${ctaText}</p>
+          <a href="https://sitesbyaj.com#contact" class="cta-btn">Get a free quote from Sites by AJ →</a>
+        </div>
+
+        <p class="restart-btn" onclick="restartAnalysis()">Analyse another website</p>
+      `;
+
+      document.getElementById('reportSection').classList.add('active');
+    }
+
+    function restartAnalysis() {
+      document.getElementById('reportSection').classList.remove('active');
+      document.getElementById('urlInput').value = '';
+      document.getElementById('formSection').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Auto-run if URL passed from homepage
+    window.addEventListener('load', () => {
+      const params = new URLSearchParams(window.location.search);
+      const url = params.get('url');
+      if (url) {
+        document.getElementById('urlInput').value = url;
+        runAnalysis();
+      }
+    });
+  </script>
+</body>
+</html>
