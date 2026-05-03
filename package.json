@@ -1,0 +1,8 @@
+{
+  "name": "sitesbyaj",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npx live-server --port=3000 --open=index.html",
+    "deploy": "npx wrangler pages deploy . --project-name sitesbyaj --commit-dirty=true"
+  }
+}
