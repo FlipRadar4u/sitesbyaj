@@ -983,7 +983,7 @@
     /* ── BACK TO TOP ── */
     .back-top {
       position: fixed;
-      bottom: 1.5rem;
+      bottom: 5.5rem;
       right: 1.25rem;
       width: 40px; height: 40px;
       background: #111111;
@@ -1001,6 +1001,66 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     }
     .back-top.visible { opacity: 1; pointer-events: all; }
+
+    /* ── DESKTOP ── */
+    .nav-links { display: none; }
+
+    @media (min-width: 860px) {
+      /* Constrain all content to max width */
+      nav,
+      .hero,
+      .section,
+      footer {
+        padding-left: max(3rem, calc((100vw - 1200px) / 2));
+        padding-right: max(3rem, calc((100vw - 1200px) / 2));
+      }
+
+      /* Nav links */
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+      .nav-links a {
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: #111111;
+        text-decoration: none;
+        opacity: 0.55;
+        transition: opacity 0.2s;
+      }
+      .nav-links a:hover { opacity: 1; }
+
+      /* Hero more breathing room */
+      .hero { padding-top: 5rem; padding-bottom: 5.5rem; }
+
+      /* Portfolio 3-column grid */
+      .port-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+      .port-thumb { height: 220px !important; }
+
+      /* Pricing 3-column grid */
+      .price-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        align-items: start;
+      }
+
+      /* Why grid 3 columns */
+      .why-grid { grid-template-columns: repeat(3, 1fr); }
+
+      /* Services horizontal */
+      .svc { padding: 2rem 0; }
+
+      /* Narrow contact form for readability */
+      .contact-form { max-width: 580px; }
+
+      /* Section text slightly wider */
+      .section-p { max-width: 560px; }
+    }
   </style>
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GXLX96H47N"></script>
@@ -1022,6 +1082,12 @@
   <!-- NAV -->
   <nav>
     <a href="#" class="logo"><img src="logoweb.png" alt="Sites by AJ" style="height:36px;width:36px;border-radius:6px;display:block;"/></a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
+    </div>
     <div style="display:flex;align-items:center;gap:0.75rem;">
       <a href="https://instagram.com/sitesbyaj" target="_blank" rel="noopener" style="font-size:0.78rem;font-weight:500;color:#111111;text-decoration:none;display:flex;align-items:center;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
@@ -1162,6 +1228,18 @@
     <div class="port-grid">
       <div class="port-card">
         <div class="port-thumb" style="padding:0;overflow:hidden;">
+          <img src="subtleaesthetics.png" alt="Subtle Aesthetics website" style="width:100%;height:190px;object-fit:cover;object-position:top;display:block;"/>
+        </div>
+        <div class="port-info">
+          <div>
+            <div class="port-name">Subtle Aesthetics</div>
+            <div class="port-type">Beauty clinic · SEO & GEO optimised</div>
+          </div>
+          <a href="https://subtleaestheticsnurse.com/" target="_blank" rel="noopener" style="color:#111;text-decoration:none;font-size:1.1rem;">→</a>
+        </div>
+      </div>
+      <div class="port-card">
+        <div class="port-thumb" style="padding:0;overflow:hidden;">
           <img src="hayesjoinery.png" alt="Hayes Joinery website" style="width:100%;height:190px;object-fit:cover;object-position:top;display:block;"/>
         </div>
         <div class="port-info">
@@ -1182,18 +1260,6 @@
             <div class="port-type">Full platform · SEO & AI search optimised</div>
           </div>
           <a href="https://flipradar.co.uk" target="_blank" rel="noopener" style="color:#111;text-decoration:none;font-size:1.1rem;">→</a>
-        </div>
-      </div>
-      <div class="port-card">
-        <div class="port-thumb" style="padding:0;overflow:hidden;">
-          <img src="sitesbyaj.png" alt="Sites by AJ website" style="width:100%;height:190px;object-fit:cover;object-position:top;display:block;"/>
-        </div>
-        <div class="port-info">
-          <div>
-            <div class="port-name">Sites by AJ</div>
-            <div class="port-type">Portfolio site · GEO & SEO optimised</div>
-          </div>
-          <a href="https://sitesbyaj.com" target="_blank" rel="noopener" style="color:#111;text-decoration:none;font-size:1.1rem;">→</a>
         </div>
       </div>
     </div>
